@@ -1,8 +1,14 @@
-const path = require('path');
-const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+// const path = require('path');
+// const webpack = require('webpack');
+// const HTMLWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+// module.exports = {
+export default {
   entry: './client/index.js',
   output: {
     path: __dirname + '/build',
