@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
+import { Link, NavLink } from 'react-router-dom';
+
 const ALL_DIS_API = 'http://localhost:8080/api';
 
 function Feed() {
