@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from './components/Header';
-// import Feed from './components/Feed';
+import Feed from './components/Feed';
 import ResponsiveAppBar from './components/navbar.jsx';
 
 
