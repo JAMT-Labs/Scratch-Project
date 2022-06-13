@@ -16,7 +16,7 @@ module.exports = {
       // Add rules
       {
         // React rule (Transpile react files)
-        test: /\.jsx?/,
+        test: /\.js$|jsx/,
         exclude: [/node_modules/],
         use: {
           loader: "babel-loader",
@@ -32,7 +32,8 @@ module.exports = {
 
       {
         // Styles Rule (Filters SASS through sass-loader -> css-loader -> style-loader)
-        test: /\.s[ac]ss$/i, //css,
+        //test: /\.s[ac]ss$/i, //css,
+        test: /\.css$/,
         use: [
           // Creates `style` nodes from JS strings
           "style-loader",
