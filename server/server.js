@@ -5,6 +5,7 @@ const cors = require('cors');
 const port = 3000;
 
 const apiRouter = require('./routes/api');
+// const disasterRouter = require('./routes/disasters');
 
 //Stating the server
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
 app.use('/api', apiRouter);
+// app.use('/disasters', disasterRouter);
 
 //We need to serve index.html on the route /
 app.get('/', (req, res) => {

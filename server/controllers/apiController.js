@@ -167,21 +167,25 @@ apiController.getDisasters = (req, res, next) => {
     );
 };
 
-// async getWatchlist(req, res, next) {
-//   // fetch data from watchlist and set to res.locals.watchlist
-//   try {
-//     const watchlist = await Movie.find({}).exec();
-//     res.locals.watchlist = watchlist;
-//     next();
-//   } catch (err) {
-//     next(
-//       createErr({
-//         method: 'getWatchlist',
-//         type: JSON.stringify(err),
-//         err: err,
-//       })
-//     );
-//   }
-// },
+apiController.getDisasterInfo = (req, res, next) => {
+  console.log('hello from apiController.getDisasterInfo');
+  const query = `SELECT * FROM disasters WHERE event_id='${req.params.id}'`;
+  console.log(
+    req.params.id,
+    'this is the req.params.id, is it not event ID? make sure!'
+  );
+  db.query(query)
+    .then((data) => {
+      res.locals.disasterInfo = data.rows;
+      console.log(res.locals.disasterInfo, 'this is res.locals.disasterInfo!');
+      next();
+    })
+    .catch((err) =>
+      next({
+        log: 'apiController.getDisasters: Error: Unable to get disasters.',
+        message: { err: err.message },
+      })
+    );
+};
 
 module.exports = apiController;

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../stylesheets/styles.scss';
+import { Link, NavLink } from 'react-router-dom';
 
 function Post({
   event_id,
@@ -30,31 +31,35 @@ function Post({
 
   return (
     <div className="disaster">
-      <img
-        src={
-          'https://previews.123rf.com/images/ylivdesign/ylivdesign1608/ylivdesign160800646/60739505-flat-natural-disaster-icons-set-universal-natural-disaster-icons-to-use-for-web-and-mobile-ui-set-of.jpg'
-        }
-        alt={`${title}`}
-      />
+      <NavLink to={`/${event_id}`}>
+        <img
+          src={
+            'https://previews.123rf.com/images/ylivdesign/ylivdesign1608/ylivdesign160800646/60739505-flat-natural-disaster-icons-set-universal-natural-disaster-icons-to-use-for-web-and-mobile-ui-set-of.jpg'
+          }
+          alt={`${title}`}
+        />
+      </NavLink>
       <div className="disaster-info">
         <h3>{`${title}`}</h3>
         <span className={`tag ${setVoteClass(rank)}`}>{`${rank}/100`}</span>
       </div>
-      <div className="disaster-overview">
-        <h2>Disaster Info</h2>
-        <h3>Disaster ID:</h3>
-        <p>{event_id}</p>
-        <h3>Categories:</h3>
-        <p>{labels}</p>
-        <h3>Country:</h3>
-        <p>{country}</p>
-        <h3>TimeZone:</h3>
-        <p>{timezone}</p>
-        <h3>Location:</h3>
-        <p>{location}</p>
-        {/* <h3>Description:</h3>
+      <NavLink to={`/${event_id}`}>
+        <div className="disaster-overview">
+          <h2>Disaster Info</h2>
+          <h3>Disaster ID:</h3>
+          <p>{event_id}</p>
+          <h3>Categories:</h3>
+          <p>{labels}</p>
+          <h3>Country:</h3>
+          <p>{country}</p>
+          <h3>TimeZone:</h3>
+          <p>{timezone}</p>
+          <h3>Location:</h3>
+          <p>{location}</p>
+          {/* <h3>Description:</h3>
         <p>{description}</p> */}
-      </div>
+        </div>
+      </NavLink>
     </div>
   );
 }

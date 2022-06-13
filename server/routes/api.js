@@ -11,4 +11,8 @@ router.get(
   (req, res) => res.status(200).json(res.locals.allDisastersFromDB)
 );
 
+router.get('/:id', apiController.getDisasterInfo, (req, res) =>
+  res.status(200).json(res.locals.disasterInfo)
+);
+
 module.exports = router;
