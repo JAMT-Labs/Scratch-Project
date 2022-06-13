@@ -3,6 +3,8 @@ const path = require('path');
 
 const port = 3000;
 
+const apiRouter = require('./routes/api')
+
 //Stating the server
 const app = express();
 app.use(express.json());
@@ -12,6 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Statically serve everything in the build folder on the route
 app.use('/build', express.static(path.join(__dirname, '../build')));
+
+app.use('/api', apiRouter)
 
 //We need to serve index.html on the route /
 app.get('/', (req, res) => {
