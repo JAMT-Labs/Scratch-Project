@@ -1,13 +1,13 @@
-const path = require('path');
-const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './client/index.js',
+  entry: "./client/index.js",
   output: {
-    path: __dirname + '/build',
-    filename: 'bundle.js',
-    publicPath: 'auto',
+    path: __dirname + "/build",
+    filename: "bundle.js",
+    publicPath: "auto",
   },
 
   mode: process.env.NODE_ENV,
@@ -19,15 +19,15 @@ module.exports = {
         test: /\.js$|jsx/,
         exclude: [/node_modules/],
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
           },
         },
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: "html-loader",
       },
 
       {
@@ -36,27 +36,26 @@ module.exports = {
         test: /\.css$/,
         use: [
           // Creates `style` nodes from JS strings
-          'style-loader',
+          "style-loader",
           // Translates CSS into CommonJS
-          'css-loader',
+          "css-loader",
           // Compiles Sass to CSS
-          'sass-loader',
-          //"style-loader!css-loader",
+          "sass-loader",
         ],
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: [".js", ".jsx"],
   },
-  plugins: [new HTMLWebpackPlugin({ template: './client/index.html' })],
+  plugins: [new HTMLWebpackPlugin({ template: "./client/index.html" })],
   devServer: {
     static: {
-      directory: path.join(__dirname, '/build'),
+      directory: path.join(__dirname, "/build"),
     },
     port: 8080,
     proxy: {
-      '/api': 'http://localhost:3000',
+      "/api": "http://localhost:3000",
     },
   },
 };

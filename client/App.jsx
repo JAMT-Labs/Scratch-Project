@@ -5,7 +5,7 @@ import ResponsiveAppBar from './components/navbar.jsx';
 
 
 
-const EVENTS_API = '' //link goes here!!
+// const EVENTS_API = '' //link goes here!!
 
 function App() {
 
