@@ -16,6 +16,7 @@ import '../stylesheets/styles.scss';
 
 const pages = ['Home', 'Login', 'Signup'];
 const settings = ['Profile', 'Account', 'Disaster Hubut'];
+import { Link, NavLink } from 'react-router-dom';
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

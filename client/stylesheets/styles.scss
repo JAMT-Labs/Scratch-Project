@@ -58,7 +58,7 @@ body {
   color: $color2;
   transform: translateY(-100%); // -/+ from top / bottom
   //transform: scale(3, 3);
-  transition: transform 500ms ease-in-out;
+  transition: transform 1000ms ease-in-out;
 }
 
 .disaster:hover .disaster-overview {
