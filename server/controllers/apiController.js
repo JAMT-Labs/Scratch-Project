@@ -62,44 +62,13 @@ apiController.addDisastersToDB = async (req, res, next) => {
   try {
     await axios.get(options.url, options).then((response) => {
       const disasters = response.data.results;
-      console.log('BEGINNING OF ALL DISASTERS FROM ADDTODISASTERSDB LINE 65');
+      // console.log('BEGINNING OF ALL DISASTERS FROM ADDTODISASTERSDB LINE 65');
       res.locals.allDisasters = disasters;
       //
-      console.log(
-        disasters,
-        'these are all of the disasters from addDisastersToDB: line 68 '
-      );
-      // for (let i = 0; i < res.locals.allDisasters.length; i++) {
-      //   const {
-      //     id,
-      //     title,
-      //     description,
-      //     category,
-      //     labels,
-      //     rank,
-      //     start,
-      //     end,
-      //     country,
-      //     location,
-      //     timezone,
-      //   } = res.locals.allDisasters[i];
-      //   const labelTypes = `${labels}`;
-      //   const text = `INSERT INTO disasters (event_id, title, description, category, labels, rank, start_date, end_date, country, location, timezone) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`;
-      //   const values = [
-      //     id,
-      //     title,
-      //     description,
-      //     category,
-      //     labelTypes,
-      //     rank,
-      //     start,
-      //     end,
-      //     country,
-      //     location,
-      //     timezone,
-      //   ];
-      //   db.query(text, values);
-      // }
+      // console.log(
+      //   disasters,
+      //   'these are all of the disasters from addDisastersToDB: line 68 '
+      // );
     });
   } catch (err) {
     createErr({
@@ -183,8 +152,19 @@ apiController.addDisastersToDB = async (req, res, next) => {
 };
 
 apiController.getDisasters = (req, res, next) => {
-  // have to call the api and fetch the data to give us back JSON of disasters
-  //add that data to our database - (only if its ID does not exist in our database)
+  const query = 'SELECT * FROM disasters';
+  db.query(query)
+    .then((data) => {
+      res.locals.allDisastersFromDB = data.rows;
+      // console.log(res.locals.allDisastersFromDB);
+      next();
+    })
+    .catch((err) =>
+      next({
+        log: 'apiController.getDisasters: Error: Unable to get disasters.',
+        message: { err: err.message },
+      })
+    );
 };
 
 // async getWatchlist(req, res, next) {

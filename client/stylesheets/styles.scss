@@ -1,0 +1,86 @@
+//disaster -> disaster / disaster-info -> disaster info / disaster overvie -> disaster overview /
+$color1: #eb5e28;
+$color2: #252422;
+$color3: #403d39;
+$color4: #172135;
+$egg: #fffcf2;
+
+* {
+  box-sizing: boarder-box;
+}
+
+body {
+  font-family: 'Helvetica Neue';
+  background-color: $color4;
+  color: $egg;
+  margin: 0;
+}
+
+.feed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.disaster {
+  background-color: $color2;
+  width: 500px;
+  margin: 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  position: relative;
+}
+
+.disaster img {
+  object-fit: cover;
+  max-width: 100%;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.disaster-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.disaster-overview {
+  background-color: $egg;
+  position: absolute;
+  border-radius: 1rem 1rem;
+  padding: 1rem;
+  top: 0; // top ->info from top / bottom -> info from bottom
+  left: 0;
+  right: 0;
+  overflow: auto;
+  max-height: 100%;
+  color: $color2;
+  transform: translateY(-100%); // -/+ from top / bottom
+  //transform: scale(3, 3);
+  transition: transform 500ms ease-in-out;
+}
+
+.disaster:hover .disaster-overview {
+  transform: translateY(0%);
+}
+
+.tag {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.25rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.tag.green {
+  color: rgb(172, 255, 47);
+}
+
+.tag.yellow {
+  color: yellow;
+}
+
+.tag.red {
+  color: rgb(255, 66, 66);
+}
