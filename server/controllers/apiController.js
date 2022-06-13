@@ -1,7 +1,7 @@
-const db = require("../models/scratchModel");
-const phq = require("predicthq");
-const { locals } = require("../server");
-const axios = require("axios");
+const db = require('../models/scratchModel');
+const phq = require('predicthq');
+const { locals } = require('../server');
+const axios = require('axios');
 
 //const requests = require('requests')
 // ?
@@ -12,7 +12,7 @@ const createErr = (errInfo) => {
   const { method, type, err } = errInfo;
   return {
     log: `apiController.${method} ${type}: ERROR: ${
-      typeof err === "object" ? JSON.stringify(err) : err
+      typeof err === 'object' ? JSON.stringify(err) : err
     }`,
     message: {
       err: `Error occurred in apiController.${method}. Check server logs for more details.`,
@@ -22,7 +22,7 @@ const createErr = (errInfo) => {
 
 // predicthq client
 const client = new phq.Client({
-  access_token: "JNqbwoSL31X0CaUWCN0F-Cm6zX2Ie5O0qehjOIqs",
+  access_token: 'JNqbwoSL31X0CaUWCN0F-Cm6zX2Ie5O0qehjOIqs',
 });
 /**
  * import requests
@@ -45,31 +45,113 @@ print(response.json())
 
 const apiController = {};
 
-apiController.addDisastersToDB = (req, res, next) => {
+apiController.addDisastersToDB = async (req, res, next) => {
   //query if disaster(event_id) exists
   //if yes, set res.locals to
 
   // const disasterState = res.locals.allDisasters
   const options = {
-    method: "GET",
-    url: "https://api.predicthq.com/v1/events/?category=disasters%2Cterror&country=US%2CCN%2CAU&label=avalanche%2Cblizzard%2Ccoastal-event%2Ccyclone%2Cdisaster%2Cearthquake%2Cexplosion%2Cfire%2Cflood%2Clandslide%2Cthunderstorm%2Ctornado%2Ctropical-storm%2Ctsunami%2Ctyphoon%2Cvolcano%2Cwildfire%2Cextreme-weather&rank_level=5",
+    method: 'GET',
+    url: 'https://api.predicthq.com/v1/events/?category=disasters%2Cterror&country=US%2CCN%2CAU&label=avalanche%2Cblizzard%2Ccoastal-event%2Ccyclone%2Cdisaster%2Cearthquake%2Cexplosion%2Cfire%2Cflood%2Clandslide%2Cthunderstorm%2Ctornado%2Ctropical-storm%2Ctsunami%2Ctyphoon%2Cvolcano%2Cwildfire%2Cextreme-weather&rank_level=5',
     headers: {
-      Accept: "application/json",
-      Authorization: "Bearer JNqbwoSL31X0CaUWCN0F-Cm6zX2Ie5O0qehjOIqs",
+      Accept: 'application/json',
+      Authorization: 'Bearer JNqbwoSL31X0CaUWCN0F-Cm6zX2Ie5O0qehjOIqs',
     },
   };
 
   try {
-    axios.get(options.url,options).then((response) => {
-      const disasters = response.data;
+    await axios.get(options.url, options).then((response) => {
+      const disasters = response.data.results;
+      console.log('BEGINNING OF ALL DISASTERS FROM ADDTODISASTERSDB LINE 65');
       res.locals.allDisasters = disasters;
-      console.log(disasters, "these ");
+      //
+      console.log(
+        disasters,
+        'these are all of the disasters from addDisastersToDB: line 68 '
+      );
+      // for (let i = 0; i < res.locals.allDisasters.length; i++) {
+      //   const {
+      //     id,
+      //     title,
+      //     description,
+      //     category,
+      //     labels,
+      //     rank,
+      //     start,
+      //     end,
+      //     country,
+      //     location,
+      //     timezone,
+      //   } = res.locals.allDisasters[i];
+      //   const labelTypes = `${labels}`;
+      //   const text = `INSERT INTO disasters (event_id, title, description, category, labels, rank, start_date, end_date, country, location, timezone) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`;
+      //   const values = [
+      //     id,
+      //     title,
+      //     description,
+      //     category,
+      //     labelTypes,
+      //     rank,
+      //     start,
+      //     end,
+      //     country,
+      //     location,
+      //     timezone,
+      //   ];
+      //   db.query(text, values);
+      // }
     });
-  } catch (error) {
-    next({
-      log: "blah",
+  } catch (err) {
+    createErr({
+      method: 'addDisastersToDB',
+      type: JSON.stringify(err),
+      err: err,
     });
   }
+
+  console.log(
+    res.locals.allDisasters,
+    '********* This is Res.locals, is it an array?'
+  );
+  console.log(
+    Array.isArray(res.locals.allDisasters),
+    '<-....if true, its an array!'
+  );
+
+  for (let i = 0; i < res.locals.allDisasters.length; i++) {
+    const {
+      id,
+      title,
+      description,
+      category,
+      labels,
+      rank,
+      start,
+      end,
+      country,
+      location,
+      timezone,
+    } = res.locals.allDisasters[i];
+    const labelTypes = `${labels}`;
+    const text = `INSERT INTO disasters (event_id, title, description, category, labels, rank, start_date, end_date, country, location, timezone) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)ON CONFLICT DO NOTHING`;
+    const values = [
+      id,
+      title,
+      description,
+      category,
+      labelTypes,
+      rank,
+      start,
+      end,
+      country,
+      location,
+      timezone,
+    ];
+
+    await db.query(text, values);
+  }
+
+  //id, title, description, category, rank, start, end, country, location, timezone & labels?(array)
 
   // response = requests
   //   .get(
@@ -93,10 +175,11 @@ apiController.addDisastersToDB = (req, res, next) => {
   //   })
   //   .catch((err) =>
   //     next({
-  //       log: "apiController.addDiasterstoDB error.",
+  //       log: "apiController.addDiasterstoDB err.",
   //       message: { err: err.message },
   //     })
   //   );
+  return next();
 };
 
 apiController.getDisasters = (req, res, next) => {
