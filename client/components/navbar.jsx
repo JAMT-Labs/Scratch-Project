@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import '../stylesheets/styles.scss';
 
 const pages = ['Home', 'Login', 'Signup'];
 const settings = ['Profile', 'Account', 'Disaster Hubut'];
