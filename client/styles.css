@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@700&family=Roboto:wght@300;500;700&display=swap');
+
+* {
+  margin: 0;
+  /* font-family: "Red Hat Display", sans-serif; */
+  font-family: 'Roboto', sans-serif;
+  background-color: #fafafa;
+}
+
+.container {
+  width: 100%;
+  /* max-width: 950px; */
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.App {
+  /* background-color: royalblue; */
+  height: 100vh;
+}
